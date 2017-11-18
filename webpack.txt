@@ -1,0 +1,44 @@
+1. webpack默认执行文件webpack.config.js。如果名称不是webpack.config.js可以在命令行下加--config参数指定。  webpac --config webpack.newname.config.js.
+  也可以通过配置package.json的script，
+	{
+		scripts:{
+			"webpack":"webpack --config webpack.newname.config.js --progress  --display-module --color  --display-reason"
+		}
+	}
+	然后在命令行执行npm run webpack.
+	
+2.package.json 中entry
+	entry为数组时， 里面所有的文件都会被打包到一起。
+	entry为object时，主要是用于多页面打包，对于不同页面指定不同的key值和入口value。 这个时候需要在output配置文件的filename中指定不同的输出，不然后面的
+		key/value会将前面的覆盖。
+		
+3.安装npm install有时候会报没权限。这时候，需要手动执行npm cache clean --force
+
+4.vscode快速填充html 方法。先输入感叹号!。然后输入tab键。
+
+5. html-webpack-plugin 解决生成js带有hash之类的，这样可以防止缓存。还可以增加其他配置项，如
+	 filename:'index-[hash].html',
+	 inject：文件引入的方式，head或者body
+	title，引用方式为  <%= htmlWebpackPlugin.options.title %>
+	
+	通过new 多个html-webpack-plugin，通过chunks或者excludeChunks，每个chunk都对应不同的原始js文件，来让每个输出的filename引用不同的chunk。
+	通过compilation.assets[htmlWebpackPlugin.files.chunks.main.entry].source()。   能够以inline的方式，将main.js内嵌到各个页面中。
+	对于非inline的js文件，可以通过配置html-webpack-plugin的inject为false，然后再在模块的index.html中，通过for循环files来引入不同的js
+	<% for(var key in htmlWebpackPlugin.files.chunks) {%>
+            <% if(key !== 'main') {%>
+                <script src="<%= htmlWebpackPlugin.files.chunks[key].entry %>"></script>
+            <% }%>
+        <% }%>
+		
+6.{
+            test:/\.js/,
+            use:[
+                "babel-loader"
+            ],
+            include:__dirname + '/src/',
+            exclude:__dirname + '/node_modules/'
+        ｝
+		通过loader处理代码。 test：正则匹配，use使用的loader。 include包含的文件夹。  exclude排除掉的文件夹
+		
+7. 处理css相关的，需要css-loader和style-loader。 webpack处理顺序是，从后往前。css先需要通过css-loader，再通过style-loader处理。因此要把css-loader放到后面。
+8.postcss-loader 。处理不同浏览器之间css的差异性。
