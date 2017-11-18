@@ -7,7 +7,11 @@ const NUM = 1;
 var layer = new Layer();
 
 var app = document.getElementById("app");
-app.innerHTML = layer.tpl;
+app.innerHTML = layer.tpl({
+
+    name:"jndxly",
+    arr:["webpack","vue"]
+});
 
 }
 

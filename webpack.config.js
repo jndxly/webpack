@@ -24,6 +24,9 @@ module.exports = {
                 "html-loader"
             ]
         },{
+            test: /\.tpl$/,
+            loader:'ejs-loader'
+        },{
             test:/\.js/,
             use:[
                 "babel-loader"
