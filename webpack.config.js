@@ -19,8 +19,10 @@ module.exports = {
 
     module:{
         rules:[{
-            test: /layer\.html$/,
-            loader:'ejs-loader'
+            test: /\.html$/,
+            use:[
+                "html-loader"
+            ]
         },{
             test:/\.js/,
             use:[
