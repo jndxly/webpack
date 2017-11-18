@@ -4,7 +4,7 @@ var htmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const extractLess = new ExtractTextPlugin({
-   filename: "[name].[contenthash].css",
+   filename: "layer.css",
    disable: process.env.NODE_ENV === "development"
 });
 
@@ -50,7 +50,13 @@ module.exports = {
             test: /\.less$/,
             use: extractLess.extract({
                 use: [{
-                    loader: "css-loader"
+                    loader: "css-loader",
+                    options: {
+                        importLoaders: 1,
+                    }
+                },
+                {
+                    loader: 'postcss-loader'
                 }, {
                     loader: "less-loader"
                 }],
