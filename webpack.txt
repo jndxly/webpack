@@ -44,3 +44,4 @@
 8.postcss-loader 。处理不同浏览器之间css的差异性。
 9. html-loader 能够处理html,将处理的html文件返回string
 10.ejs-loader 能够处理 .tpl的模块文件。返回对应的function
+11.webpack-spritesmith 用于生成csssprite
