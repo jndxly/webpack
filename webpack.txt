@@ -1,0 +1,37 @@
+1. 在git bash下，通过 ./node_modules/.bin/webpack  app/main.js  public/bundle.js。 可以调用webpack命令，将
+ 指定的文件打包，输出到指定的目录下。
+2.如果有了webpack.config.js，那么在git bash下直接输入webpack（全局安装下），就可以直接打包。
+3.如果在package.json的script里配置了"scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack"
+  }, 那么命令行下直接输入npm  start就可以直接打包。或者npm run start就可以直接打包。
+4. ctrl+shift+n可以再开一个vscode
+5.eval和sourcemap有什么关系，eval模式是sourcemap吗？
+eval和source-map都是webpack中devtool的配置选项， eval模式是使用eval将webpack中每个模块包裹，
+然后在模块末尾添加模块来源//# souceURL， 依靠souceURL找到原始代码的位置。
+包含eval关键字的配置项并不单独产生.map文件（eval模式有点特殊， 它和其他模式不一样的地方是它依靠sourceURL来定位原始代码， 
+而其他所有选项都使用.map文件的方式来定位）。包含source-map关键字的配置项都会产生一个.map文件，
+该文件保存有原始代码与运行代码的映射关系， 浏览器可以通过它找到原始代码的位置。
+（注：包含inline关键字的配置项也会产生.map文件，但是这个map文件是经过base64编码作为DataURI嵌入），
+举个栗子：eval-source-map是eval和source-map的组合，可知使用eavl语句包括模块，也产生了.map文件。
+webpack将.map文件作为DataURI替换eval模式中末尾的//# souceURL。按照我自己的理解， 
+eval和.map文件都是sourcemap实现的不同方式，虽然大部分sourcemap的实现是通过产生.map文件， 
+但并不表示只能通过.map文件实现。  from  https://segmentfault.com/a/1190000008315937
+
+6.webpack-dev-server能够让浏览器实时监听本地代码，并实时刷新。相关配置如下：
+6.1webpack.config.js中的配置
+devserver的配置选项	功能描述
+contentBase	默认webpack-dev-server会为根文件夹提供本地服务器，如果想为另外一个目录下的文件提供本地服务器，应该在这里设置其所在目录（本例设置到“public"目录）
+port	设置默认监听端口，如果省略，默认为”8080“
+inline	设置为true，当源文件改变时会自动刷新页面
+historyApiFallback	在开发单页应用时非常有用，它依赖于HTML5 history API，如果设置为true，所有的跳转将指向index.html
+6.2 package.json中的配置
+在package.json中的scripts对象中添加如下命令，用以开启本地服务器：
+"scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack",
+    "server": "webpack-dev-server --open"
+  },
+这样，在命令行中输入npm run server会自动打开浏览器看效果。并且修改entry相关代码后，会自动重新打包，并刷新
+
+
