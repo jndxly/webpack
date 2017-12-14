@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 module.exports = {
   devtool: 'eval-source-map',
     entry:  __dirname + "/app/main.js",//已多次提及的唯一入口文件
@@ -32,14 +33,19 @@ module.exports = {
                   }
 
                     
-                }
+                }, {
+                  loader: "postcss-loader"
+              }
             ]
         }
 
 
     ]
 
-    }
+    },
+    plugins: [
+        new webpack.BannerPlugin('版权所有，翻版必究')
+    ]
   }
   
   
