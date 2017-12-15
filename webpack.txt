@@ -33,5 +33,9 @@ historyApiFallback	在开发单页应用时非常有用，它依赖于HTML5 hist
     "server": "webpack-dev-server --open"
   },
 这样，在命令行中输入npm run server会自动打开浏览器看效果。并且修改entry相关代码后，会自动重新打包，并刷新
+7.--config ./webpack.production.config.js.  指定webpack.config.js文件名。
+8.OccurenceOrderPlugin :为组件分配ID，通过这个插件webpack可以分析和优先考虑使用最多的模块，并为它们分配最小的ID
+UglifyJsPlugin：压缩JS代码；
+ExtractTextPlugin：分离CSS和JS文件
 
 
