@@ -36,6 +36,12 @@ historyApiFallback	在开发单页应用时非常有用，它依赖于HTML5 hist
 7.--config ./webpack.production.config.js.  指定webpack.config.js文件名。
 8.OccurenceOrderPlugin :为组件分配ID，通过这个插件webpack可以分析和优先考虑使用最多的模块，并为它们分配最小的ID
 UglifyJsPlugin：压缩JS代码；
-ExtractTextPlugin：分离CSS和JS文件
+ExtractTextPlugin：分离CSS和JS文件，
+9.new CleanWebpackPlugin('build/*.*', {
+            root: __dirname, //指定目录
+            verbose: true,  //开启console log
+            dry: false      //为false时，才可以启用删除文件
+        })；   用于清除对应目录下文件
+10.http://npm.taobao.org/package/webpack  淘宝用于搜索npm 的网站。
 
 
